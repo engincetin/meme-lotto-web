@@ -465,15 +465,23 @@ export  class Game{
     mint:PublicKey = TOKEN_PROGRAM_ID;
     token_program:PublicKey = TOKEN_PROGRAM_ID;
     price_feed:PublicKey = TOKEN_PROGRAM_ID;
+    name:string = "";
+    meme_no:number = 0;
     constructor(fields: {
         mint:PublicKey;
         token_program:PublicKey;
         price_feed:PublicKey;
+        name:string;
+        meme_no:number;
+
      } | undefined = undefined)
       {if (fields) {
         this.mint = fields.mint;
         this.token_program = fields.token_program;
         this.price_feed = fields.price_feed;
+        this.name = fields.name;
+        this.meme_no = fields.meme_no;
+
       }
     }
   }

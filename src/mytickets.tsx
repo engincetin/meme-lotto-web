@@ -3,7 +3,7 @@ import { Game, Ticket } from './models';
 import { claim_your_reward_or_return_deposit} from "./service"
 import { get_my_tickets } from './utils';
 import { WalletContextState } from '@solana/wallet-adapter-react';
-import {  meme_str, memes } from './memes';
+import {   memes } from './memes';
 
 
 
@@ -64,7 +64,7 @@ const MyTickets: FC<MyTicketsProps> = ({ wallet }) => {
                                     <p>number_5: {ticket.number5}</p>
                                     <p>number_6: {ticket.number6}</p>
                                     <p>matches: {ticket.matches}</p>
-                                    <p>meme: {meme_str[ticket.meme]}</p>
+                                    <p>meme: {memes[ticket.meme].name}</p>
                                     <p>prize_amount: {ticket.prize_amount}</p>
                                     {ticket.can_be_claimed ?(
                                     <div>

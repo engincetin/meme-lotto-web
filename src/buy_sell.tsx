@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Game, Ticket } from './models';
-import { claim_your_reward_or_return_deposit} from "./service"
+import { Game, MeMe, Ticket } from './models';
+import { buy_other_tokens_from_program, claim_your_reward_or_return_deposit, sell_token_of_the_week_to_program} from "./service"
 import { get_my_tickets } from './utils';
 import { WalletContextState } from '@solana/wallet-adapter-react';
-import {  meme_str, memes } from './memes';
+import {   memes } from './memes';
+import { current_lottery_no, meme_of_the_week } from './distribution';
 
 
 
@@ -13,84 +14,66 @@ interface BuySellProps {
 
 const BuySell: FC<BuySellProps> = ({ wallet }) => {
 
-    const [data, setData] = useState<Ticket[] | null>(null); 
+    const [token_amount, setTokenAmount] = useState('');
+    const [sol_amount, setSolAmount] = useState('');
 
-    useEffect(() => {
+    const handleTokenAmountChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+        setTokenAmount(event.target.value);
+      };
 
-        const getAccounts = async () => {
-            try {
-                const nfts = await get_my_tickets(wallet);
-                if (Array.isArray(nfts)) {
-                    setData(nfts);
-                } else {
-                    setData([]);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setData([]);
-            }
-        };
+      const handleSolAmountChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+        setSolAmount(event.target.value);
+      };
 
-        getAccounts();
-        
-    }, [data]);
+    const handleBuyToken = async (meme:MeMe) => {
+        const amount_to_buy = parseInt(token_amount, 10);
+  
+        await buy_other_tokens_from_program(meme.mint,meme.token_program,meme.price_feed,memes[meme_of_the_week].mint,(current_lottery_no-1),BigInt(amount_to_buy),wallet)
+      };
 
+      const handleSellToken = async (meme:MeMe) => {
+        const amount_to_buy = parseInt(sol_amount, 10);
+  
+        await sell_token_of_the_week_to_program(meme.mint,meme.token_program,meme.price_feed,BigInt(amount_to_buy),(current_lottery_no-1),wallet)
+      };
 
-    const handleClaimRewardorReturnDeposit = async (ticket:Ticket) => {
-        const meme = memes[ticket.meme]
-        claim_your_reward_or_return_deposit(meme.mint,meme.token_program,ticket.account_address,ticket.lottery_no,wallet)
-    };
+    
 
     return (
         <div>
-            <h1>New Page</h1>
-            {data !== null ? (
-                data.length > 0 ? (
-                    <div>
-                        {data.map((ticket: Ticket, index) => (
-                            <div key={index} className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Ticket</h5>
-                                    <p>lucky_number_1: {ticket.lucky_number1}</p>
-                                    <p>lucky_number_2: {ticket.lucky_number2}</p>
-                                    <p>lucky_number_3: {ticket.lucky_number3}</p>
-                                    <p>lucky_number_4: {ticket.lucky_number4}</p>
-                                    <p>lucky_number_5: {ticket.lucky_number5}</p>
-                                    <p>lucky_number_6: {ticket.lucky_number6}</p>
-                                    <p>number_1: {ticket.number1}</p>
-                                    <p>number_2: {ticket.number2}</p>
-                                    <p>number_3: {ticket.number3}</p>
-                                    <p>number_4: {ticket.number4}</p>
-                                    <p>number_5: {ticket.number5}</p>
-                                    <p>number_6: {ticket.number6}</p>
-                                    <p>matches: {ticket.matches}</p>
-                                    <p>meme: {meme_str[ticket.meme]}</p>
-                                    <p>prize_amount: {ticket.prize_amount}</p>
-                                    {ticket.can_be_claimed ?(
-                                    <div>
-                                        {ticket.wins ?(
-                                        <div>
-                                           <button disabled={false} onClick={() => handleClaimRewardorReturnDeposit(ticket)}>claim reward</button>
-                                        </div>):
-                                           (
-                                        <div>
-                                           <button disabled={false} onClick={() => handleClaimRewardorReturnDeposit(ticket)}>return deposit</button>
-                                        </div>)}
-                                    </div>):
-                                    (<div>
-                                        <button disabled={true} onClick={() => handleClaimRewardorReturnDeposit(ticket)}>Wait for the countdown</button>
-                                    </div>)}
-     
-                                </div>
-                            </div>
-                        ))}
+            <h1>Buy Tokens</h1>
+            <div>
+                {memes.map((meme: MeMe, index) => (
+                    <div key={index} className="card">
+                        <div className="card-body">
+                            <h5 className="card-title">Ticket</h5>
+                            {
+                                //meme tokenin market fiyati
+                                //meme tokenin bizdeki fiyati
+                            }
+                        </div>
+                        <div>
+                          <button onClick={() => handleBuyToken(meme)} >buy {meme.name}</button>
+                          <input
+                            type="text"
+                            placeholder="Token amount"
+                            value={token_amount}
+                            onChange={handleTokenAmountChange}
+                          />
+                        </div>
                     </div>
-                ) : (
-                    <p>There is no ticket</p>
-                )
-            ) : (
-                <p>Loading...</p>
-            )}
+                ))}
+            <h1>Sell Meme of the week</h1>
+                <div>
+                    <button onClick={() => handleSellToken(memes[meme_of_the_week])} >sell {memes[meme_of_the_week].name}</button>
+                    <input
+                      type="text"
+                      placeholder="Sol amount"
+                      value={sol_amount}
+                      onChange={handleSolAmountChange}
+                    />
+                </div>
+            </div>
         </div>
     );
 };

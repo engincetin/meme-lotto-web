@@ -3,7 +3,7 @@ import { Game, MeMe, Ticket } from './models';
 import { claim_your_reward_or_return_deposit, play} from "./service"
 import { get_my_tickets } from './utils';
 import { WalletContextState } from '@solana/wallet-adapter-react';
-import {  meme_str } from './memes';
+import {  memes } from './memes';
 import { active_main_counter, number_of_counters } from './distribution';
 
 
