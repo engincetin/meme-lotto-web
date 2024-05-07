@@ -4,10 +4,9 @@ import { ConnectionProvider, WalletProvider, useConnection, useWallet } from '@s
 import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { Button } from '@solana/wallet-adapter-react-ui/lib/types/Button';
 
-import '../src/css/bootstrap.css'
+
 import {
 
-    LedgerWalletAdapter,
     PhantomWalletAdapter,
     SolflareWalletAdapter,
 
@@ -25,7 +24,6 @@ import BuySell from './buy_sell';
 
 
 
-require('./App.css');
 require('@solana/wallet-adapter-react-ui/styles.css');
 
 
@@ -47,7 +45,6 @@ const Context: FC<{ children: ReactNode }> = ({ children }) => {
     const endpoint = useMemo(() => clusterApiUrl(network), [network]);
     const wallets = useMemo(
         () => [
-            new LedgerWalletAdapter(),
             new PhantomWalletAdapter(),
             new SolflareWalletAdapter({ network }),
         ],
