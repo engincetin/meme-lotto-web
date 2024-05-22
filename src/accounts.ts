@@ -12,10 +12,14 @@ export const terms_account = new PublicKey('7kpB74L2NpySBgo9KpADb5QX8LJxdGGgx13j
 export const lottery_account = new PublicKey('2P5vur1SnZ6BxG95zE7BqTd6SJe17igYJRKTGtMxtht3');
 export const record_account = new PublicKey('5ZQimJTmqyLgkYXcCPzedpcfa9D6emRzAsoNivyW4jw2');
 
-export const bonk_mint = new PublicKey("5ZQimJTmqyLgkYXcCPzedpcfa9D6emRzAsoNivyW4jw2");
-export const wen_mint = new PublicKey("5ZQimJTmqyLgkYXcCPzedpcfa9D6emRzAsoNivyW4jw2");
-export const wif_mint = new PublicKey("5ZQimJTmqyLgkYXcCPzedpcfa9D6emRzAsoNivyW4jw2");
-export const bonk_price_feed = new PublicKey("5ZQimJTmqyLgkYXcCPzedpcfa9D6emRzAsoNivyW4jw2");
-export const wen__price_feed = new PublicKey("5ZQimJTmqyLgkYXcCPzedpcfa9D6emRzAsoNivyW4jw2");
-export const wif__price_feed = new PublicKey("5ZQimJTmqyLgkYXcCPzedpcfa9D6emRzAsoNivyW4jw2");
-export const meme_mints:PublicKey[] = [bonk_mint,wen_mint,wif_mint];
+export const bonk_mint = new PublicKey("5iuqBm6NM95Qt8ZDGwThFiWJ5HL5EmCSpHcQAHq6hwhk");
+export const wen_mint = new PublicKey("FPoMK1kjbngPS7fUXAcubJzQWa4UaN3ACNb87BhbCGX1");
+export const wif_mint = new PublicKey("7CXAeh5amXwGcqSuJdZmp27unL1DcAgC4fx9UmQkDyJ2");
+export const bome_mint = new PublicKey("5U8WZ6eKiufwWHijXSajAbpt2dgjMd3XWMGypsVznjwC");
+export const bonk_price_feed = new PublicKey('GGwwtxsxz1C3hmseC7K3rh4iisb1dbPWHwouxudqFJq7');
+export const wif_price_feed = new PublicKey('BMMShRFPcK5JfX3sCm6xqNuYjkWmtE3VVqdxCMf2hjCH');
+export const wen_price_feed = new PublicKey('9ShqzM3oXUXErke6imspxBfCXXanNSsNtVT2K82xiepc');
+export const bome_price_feed = new PublicKey('6KBetRiiFZz1HMjmXN3UBVKRtSPniboz8RS5i7Esx39f');
+
+export const meme_mints:PublicKey[] = [bonk_mint,wen_mint,wif_mint,bome_mint];
+
